@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Warung Beta</title>
+    <link rel="icon" type="image/png" href="assets/images/icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Share Tech Mono', monospace;
+      background: radial-gradient(circle at top, #111, #000);
+      color: #0ff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('assets/images/banner.png');
+      background-size: cover;
+      background-position: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .form-container {
+      background: rgba(0, 0, 0, 0.85);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #0ff;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      font-size: 28px;
+      color: #0ff;
+      text-shadow: 0 0 6px #0ff, 0 0 12px #0ff;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+      color: #7df9ff;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      background: #111;
+      border: 2px solid #0ff;
+      color: #0ff;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #f0f;
+      box-shadow: 0 0 10px #f0f;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: linear-gradient(to right, #0ff, #f0f);
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: 'Orbitron', sans-serif;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #f0f, #0ff);
+      box-shadow: 0 0 20px #f0f;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.85);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content {
+      text-align: center;
+      padding: 30px;
+      background: #000;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .popup-content img {
+      width: 80px;
+      margin-bottom: 15px;
+    }
+
+    .popup-content h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: #0ff;
+    }
+
+    ::placeholder {
+      color: #0ff8;
+    }
+    .btn-kembali {
+    margin-top: 500px; 
+    padding: 5px 12px;
+    background: rgb(155, 155, 155);
+    color:rgb(155, 155, 155);
+    background-color: transparent;
+    border: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #0ff;
+    transition: 0.3s ease;
+    }
+
+.btn-kembali:hover {
+  background: linear-gradient(to right, #f0f, #0ff);
+  box-shadow: 0 0 20px #f0f;
+}
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Make an Order!</h2>
+  <a href="index.html" class="btn-kembali">← Kembali</a>
+  <form id="orderForm" action="https://formspree.io/f/mqabwggr" method="POST">
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="Nama" placeholder="Masukkan nama anda" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="Email" placeholder="Contoh: smithganteng@gmail.com" required>
+
+    <label for="pesanan">Pesanan:</label>
+    <textarea id="pesanan" name="Pesanan" rows="5" placeholder="Detail lengkap pesananmu..." required></textarea>
+
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="Pesanan Baru dari Warung Beta!">
+    <input type="hidden" name="_next" value="https://warungbeta.github.io/success.html">
+
+    <button type="submit" id="kirimBtn">Kirim Pesanan</button>
+  </form>
+</div>
+
+<!-- === POPUP === -->
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <img src="assets/audio/loading.gif" alt="Loading">
+    <h3>Memproses Pesananmu...</h3>
+    <p>Mengirim pesanan. JANGAN MAIN MAIN DENGAN ORDER INI, IP MU ADA DI SAYA!</p>
+  </div>
+</div>
+
+<audio id="clickSound" src="assets/audio/notification.wav" preload="auto"></audio>
+
+<script>
+  const form = document.getElementById('orderForm');
+  const popup = document.getElementById('popup');
+  const clickSound = document.getElementById('clickSound');
+
+  form.addEventListener('submit', function (e) {
+    clickSound.play();
+    popup.style.display = 'flex';
+  });
+</script>
+
+</body>
+</html>
